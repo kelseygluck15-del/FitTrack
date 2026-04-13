@@ -10,6 +10,7 @@
 
 /* RESET */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
 body{
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
   background:linear-gradient(to bottom,#f8fbfe,#eef7fd);
@@ -17,62 +18,74 @@ body{
   overflow-x:hidden;
 }
 
-/* APP WRAPPER */
+/* APP */
 .app{
   max-width:430px;
   margin:0 auto;
   min-height:100vh;
-  padding:16px;
+  padding:12px;
 }
 
 /* TOP BAR */
 .topbar{
-  padding:16px;
-  margin-bottom:12px;
+  padding:14px;
+  margin-bottom:10px;
   background:rgba(255,255,255,0.9);
-  border-radius:20px;
+  border-radius:16px;
   backdrop-filter:blur(10px);
-  box-shadow:0 10px 30px rgba(79,158,216,0.12);
+  box-shadow:0 8px 20px rgba(79,158,216,0.12);
 }
 
 .topbar h2{
-  font-size:20px;
+  font-size:18px;
   font-weight:700;
 }
 
 .topbar .sub{
-  font-size:12px;
+  font-size:11px;
   color:#5f7285;
 }
 
-/* CARDS (MAIN UPGRADE) */
+/* CARDS */
 .ex-card,
 .log-card,
 .chart-card,
 .hist-item{
   background:rgba(255,255,255,0.95);
-  border-radius:20px;
-  padding:16px;
-  margin-bottom:12px;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:10px;
   border:1px solid #d9e8f3;
-  box-shadow:0 10px 30px rgba(79,158,216,0.12);
+  box-shadow:0 8px 20px rgba(79,158,216,0.12);
 }
 
 /* BUTTONS */
 button{
+  font-family:inherit;
+  cursor:pointer;
   background:linear-gradient(180deg,#a9dcff 0%,#72bff4 100%);
-  color:white;
+  color:#fff;
   border:none;
-  border-radius:14px;
-  padding:10px 12px;
+  border-radius:10px;
+  padding:8px 10px;
   font-weight:600;
+  font-size:13px;
 }
 
 /* SET BUTTONS */
 .set-btn{
+  flex:1;
+  height:32px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #d9e8f3;
   background:#f0f7fc;
   color:#5f7285;
-  border:1px solid #d9e8f3;
+  font-size:11px;
+  font-weight:600;
+  padding:0;
 }
 
 .set-btn.checked{
@@ -80,68 +93,19 @@ button{
   color:#fff;
 }
 
-/* INPUTS */
-input{
-  border-radius:12px;
-  border:1px solid #d9e8f3;
-  padding:8px;
-  background:#fff;
-}
-
-/* PROGRESS BAR */
-.prog-bar{
-  background:#eaf4fb;
-}
-
-.prog-fill{
-  background:#72bff4 !important;
-}
-
-/* TAB BAR */
-.tab-nav{
-  background:rgba(255,255,255,0.95);
-  border-top:1px solid #d9e8f3;
-}
-
-.tab-btn{
-  color:#8aa6bc;
-}
-
-.tab-btn.active{
-  color:#2d7fbc;
-}
-
-/* TEXT */
-.ex-meta,
-.sched-day,
-.sched-detail{
-  color:#5f7285;
-}
-/* 🔧 FIX BUTTON SIZE + LOOK */
-button{
-  padding:8px 10px;
-  font-size:13px;
-  border-radius:10px;
-}
-
-/* 🔧 FIX SET BUTTONS (make smaller + cleaner) */
-.set-btn{
-  height:32px;
-  font-size:11px;
-  border-radius:8px;
-  padding:0;
-}
-
-/* 🔧 FIX INFO ICON (THIS IS THE BIG ONE YOU HATE) */
+/* INFO ICON FIX */
 .ex-info-btn{
   width:20px;
   height:20px;
+  border:none;
+  color:#4f9ed8;
+  background:#eaf4fb;
   border-radius:6px;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#eaf4fb;
   padding:0;
+  flex:0 0 20px;
 }
 
 .ex-info-btn svg{
@@ -149,23 +113,64 @@ button{
   height:12px;
 }
 
-/* 🔧 FIX CARD SPACING */
-.ex-card{
-  padding:14px;
-  margin-bottom:10px;
-}
-
-/* 🔧 FIX INPUT SIZE */
+/* INPUT */
 .wt-input{
   width:50px;
+  padding:5px 6px;
+  border-radius:8px;
+  border:1px solid #d9e8f3;
   font-size:12px;
-  padding:5px;
+  text-align:center;
+  background:#fff;
+  color:#1f2d3a;
+  outline:none;
 }
 
-/* 🔧 FIX TAB BAR (less chunky) */
+/* PROGRESS */
+.prog-bar{
+  margin-top:12px;
+  background:#eaf4fb;
+  border-radius:6px;
+  height:6px;
+}
+
+.prog-fill{
+  height:100%;
+  border-radius:6px;
+  background:#72bff4 !important;
+}
+
+/* CONTENT */
+.content{
+  padding:12px 12px 100px;
+}
+
+/* TAB BAR */
+.tab-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(255,255,255,0.95);
+  border-top:1px solid #d9e8f3;
+  display:flex;
+  padding-bottom:8px;
+}
+
 .tab-btn{
-  font-size:10px;
-  padding:6px 0;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:6px 0 4px;
+  gap:2px;
+  background:none;
+  border:none;
+  color:#8aa6bc;
+}
+
+.tab-btn.active{
+  color:#2d7fbc;
 }
 
 .tab-btn svg{
@@ -173,19 +178,25 @@ button{
   height:18px;
 }
 
-/* 🔧 FIX TOP SPACING */
-.content{
-  padding:12px 12px 90px;
+.tab-btn span{
+  font-size:10px;
 }
 
-/* 🔧 CLEANER TEXT */
+/* TEXT */
 .ex-name{
   font-size:14px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
 
 .ex-meta{
   font-size:11px;
+  color:#5f7285;
+  margin-top:2px;
 }
+
 </style>
 </style>
 </head>
