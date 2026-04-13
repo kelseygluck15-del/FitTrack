@@ -6,676 +6,607 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>FitTrack</title>
 <style>
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+/* ── RESET ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
-  background:linear-gradient(to bottom,#f8fbfe,#eef7fd);
-  color:#1f2d3a;
-  overflow-x:hidden;
+/* ── DESIGN TOKENS ── */
+:root{
+  --bg:#EEF5FC;
+  --card:#FFFFFF;
+  --primary:#5BAAD8;
+  --primary-deep:#3A85BB;
+  --text:#1A2E42;
+  --muted:#6B8FAD;
+  --border:#D4E6F4;
+  --shadow:0 2px 12px rgba(75,140,200,0.08);
+  --shadow-md:0 4px 20px rgba(75,140,200,0.12);
+  --radius:14px;
+  --radius-sm:9px;
+  --input-bg:#F3F8FD;
 }
 
-/* APP */
+/* ── BASE ── */
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+button{font-family:inherit;cursor:pointer}
+
+/* ── APP SHELL ── */
 .app{
   max-width:430px;
   margin:0 auto;
   min-height:100vh;
-  padding:12px;
 }
 
-/* TOP BAR */
+/* ── TOP BAR ── */
 .topbar{
-  padding:14px;
-  margin-bottom:10px;
-  background:rgba(255,255,255,0.9);
-  border-radius:16px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 8px 20px rgba(79,158,216,0.12);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 18px 14px;
+  background:rgba(255,255,255,0.94);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
-
 .topbar h2{
-  font-size:18px;
+  font-size:19px;
   font-weight:700;
+  color:var(--text);
+  letter-spacing:-0.4px;
 }
-
 .topbar .sub{
   font-size:11px;
-  color:#5f7285;
+  color:var(--muted);
+  margin-top:1px;
+  font-weight:400;
 }
 
-/* CARDS */
-.ex-card,
-.log-card,
-.chart-card,
-.hist-item{
-  background:rgba(255,255,255,0.95);
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:10px;
-  border:1px solid #d9e8f3;
-  box-shadow:0 8px 20px rgba(79,158,216,0.12);
-}
-
-/* BUTTONS */
-button{
-  font-family:inherit;
-  cursor:pointer;
-  background:linear-gradient(180deg,#a9dcff 0%,#72bff4 100%);
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:8px 10px;
+/* ── WEEK BADGE ── */
+.week-badge{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  background:rgba(91,170,216,0.1);
+  color:var(--primary-deep);
+  border-radius:20px;
+  padding:5px 11px;
+  font-size:12px;
   font-weight:600;
+  border:1px solid rgba(91,170,216,0.2);
+}
+
+/* ── CONTENT ── */
+.content{
+  padding:14px 14px 100px;
+}
+
+/* ── CARDS ── */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:16px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+/* ── WEEK STATS ── */
+.week-stat{
+  text-align:center;
+}
+.week-stat .label{
+  font-size:10px;
+  color:var(--muted);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.week-stat .value{
+  font-size:28px;
+  font-weight:700;
+  color:var(--text);
+  margin-top:6px;
+}
+.week-stat .bar{
+  height:4px;
+  background:var(--border);
+  border-radius:2px;
+  margin-top:8px;
+  overflow:hidden;
+}
+.week-stat .bar-fill{
+  height:100%;
+  background:var(--primary);
+}
+
+/* ── BUTTONS ── */
+button{
+  border:none;
+  border-radius:var(--radius-sm);
+  padding:11px 16px;
+  font-size:15px;
+  font-weight:500;
+  transition:all 0.2s ease;
+}
+button:active{
+  transform:scale(0.98);
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:#fff;
+}
+
+.btn-primary:hover{
+  background:var(--primary-deep);
+}
+
+.btn-secondary{
+  background:var(--input-bg);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.btn-secondary:hover{
+  background:var(--border);
+}
+
+.btn-sm{
+  padding:8px 12px;
   font-size:13px;
 }
 
-/* SET BUTTONS */
-.set-btn{
-  flex:1;
-  height:32px;
-  border-radius:8px;
+.btn-icon{
+  width:44px;
+  height:44px;
+  padding:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  border:1px solid #d9e8f3;
-  background:#f0f7fc;
-  color:#5f7285;
-  font-size:11px;
-  font-weight:600;
-  padding:0;
+  background:var(--input-bg);
+  border:1px solid var(--border);
 }
 
-.set-btn.checked{
-  background:#72bff4;
+.btn-icon:hover{
+  background:var(--border);
+}
+
+.btn-icon.active{
+  background:var(--primary);
   color:#fff;
+  border-color:var(--primary);
 }
 
-/* INFO ICON FIX */
-.ex-info-btn{
-  width:20px;
-  height:20px;
-  border:none;
-  color:#4f9ed8;
-  background:#eaf4fb;
-  border-radius:6px;
+/* ── INPUTS ── */
+input,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  background:var(--input-bg);
+  font-family:inherit;
+  font-size:15px;
+  color:var(--text);
+  transition:border-color 0.2s ease;
+}
+
+input:focus,textarea:focus{
+  outline:none;
+  border-color:var(--primary);
+}
+
+textarea{
+  resize:vertical;
+  min-height:100px;
+}
+
+/* ── LISTS ── */
+.list{
+  list-style:none;
+}
+
+.list-item{
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.list-item:last-child{
+  border-bottom:none;
+}
+
+.list-item-icon{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:var(--input-bg);
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:0;
-  flex:0 0 20px;
+  flex-shrink:0;
 }
 
-.ex-info-btn svg{
-  width:12px;
-  height:12px;
+.list-item-content{
+  flex:1;
 }
 
-/* INPUT */
-.wt-input{
-  width:50px;
-  padding:5px 6px;
-  border-radius:8px;
-  border:1px solid #d9e8f3;
+.list-item-label{
+  font-size:14px;
+  color:var(--text);
+  font-weight:500;
+  margin-bottom:2px;
+}
+
+.list-item-meta{
   font-size:12px;
-  text-align:center;
-  background:#fff;
-  color:#1f2d3a;
-  outline:none;
+  color:var(--muted);
 }
 
-/* PROGRESS */
-.prog-bar{
-  margin-top:12px;
-  background:#eaf4fb;
-  border-radius:6px;
-  height:6px;
-}
-
-.prog-fill{
-  height:100%;
-  border-radius:6px;
-  background:#72bff4 !important;
-}
-
-/* CONTENT */
-.content{
-  padding:12px 12px 100px;
-}
-
-/* TAB BAR */
-.tab-nav{
+/* ── MODAL ── */
+.modal-overlay{
   position:fixed;
-  bottom:0;
+  top:0;
   left:0;
   right:0;
-  background:rgba(255,255,255,0.95);
-  border-top:1px solid #d9e8f3;
+  bottom:0;
+  background:rgba(0,0,0,0.5);
   display:flex;
-  padding-bottom:8px;
+  align-items:flex-end;
+  z-index:100;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s ease;
 }
 
-.tab-btn{
-  flex:1;
+.modal-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.modal{
+  width:100%;
+  background:var(--card);
+  border-radius:var(--radius) var(--radius) 0 0;
+  padding:24px 18px;
+  max-height:80vh;
+  overflow-y:auto;
+  animation:slideUp 0.3s ease;
+}
+
+@keyframes slideUp{
+  from{
+    transform:translateY(100%);
+  }
+  to{
+    transform:translateY(0);
+  }
+}
+
+.modal-header{
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.modal-content{
   display:flex;
   flex-direction:column;
-  align-items:center;
-  padding:6px 0 4px;
-  gap:2px;
-  background:none;
-  border:none;
-  color:#8aa6bc;
+  gap:16px;
 }
 
-.tab-btn.active{
-  color:#2d7fbc;
-}
-
-.tab-btn svg{
-  width:18px;
-  height:18px;
-}
-
-.tab-btn span{
-  font-size:10px;
-}
-
-/* TEXT */
-.ex-name{
-  font-size:14px;
-  font-weight:600;
+/* ── TABS ── */
+.tabs{
   display:flex;
-  align-items:center;
-  gap:6px;
+  gap:4px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:16px;
 }
 
-.ex-meta{
+.tab{
+  padding:12px 16px;
+  border:none;
+  background:none;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:all 0.2s ease;
+}
+
+.tab:hover{
+  color:var(--text);
+}
+
+.tab.active{
+  color:var(--primary);
+  border-bottom-color:var(--primary);
+}
+
+.tab-content{
+  display:none;
+}
+
+.tab-content.active{
+  display:block;
+}
+
+/* ── BADGE ── */
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:4px;
   font-size:11px;
-  color:#5f7285;
-  margin-top:2px;
+  font-weight:600;
+  background:var(--input-bg);
+  color:var(--muted);
+  white-space:nowrap;
+}
+
+.badge.primary{
+  background:rgba(91,170,216,0.2);
+  color:var(--primary-deep);
+}
+
+.badge.success{
+  background:rgba(76,175,80,0.2);
+  color:rgb(56,142,60);
+}
+
+.badge.warning{
+  background:rgba(255,152,0,0.2);
+  color:rgb(230,124,15);
+}
+
+.badge.danger{
+  background:rgba(244,67,54,0.2);
+  color:rgb(211,47,47);
+}
+
+/* ── SPACING ── */
+.gap-1{gap:4px}
+.gap-2{gap:8px}
+.gap-3{gap:12px}
+.gap-4{gap:16px}
+.gap-5{gap:20px}
+
+.mt-1{margin-top:4px}
+.mt-2{margin-top:8px}
+.mt-3{margin-top:12px}
+.mt-4{margin-top:16px}
+.mt-5{margin-top:20px}
+
+.mb-1{margin-bottom:4px}
+.mb-2{margin-bottom:8px}
+.mb-3{margin-bottom:12px}
+.mb-4{margin-bottom:16px}
+.mb-5{margin-bottom:20px}
+
+/* ── TEXT ── */
+.text-center{text-align:center}
+.text-left{text-align:left}
+.text-right{text-align:right}
+
+.text-muted{color:var(--muted)}
+.text-primary{color:var(--primary)}
+
+.font-sm{font-size:12px}
+.font-base{font-size:15px}
+.font-lg{font-size:18px}
+.font-xl{font-size:21px}
+
+.font-bold{font-weight:700}
+.font-medium{font-weight:500}
+
+/* ── FLEX ── */
+.flex{display:flex}
+.flex-col{flex-direction:column}
+.flex-between{justify-content:space-between}
+.flex-center{justify-content:center;align-items:center}
+
+/* ── GRID ── */
+.grid{display:grid}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+
+/* ── RESPONSIVE ── */
+@media (min-width:480px){
+  .app{max-width:600px}
+}
+
+/* ── UTILITIES ── */
+.rounded{border-radius:var(--radius)}
+.rounded-sm{border-radius:var(--radius-sm)}
+.rounded-full{border-radius:9999px}
+
+.shadow{box-shadow:var(--shadow)}
+.shadow-md{box-shadow:var(--shadow-md)}
+
+.opacity-50{opacity:0.5}
+.opacity-75{opacity:0.75}
+
+.cursor-pointer{cursor:pointer}
+.select-none{user-select:none}
+
+.w-full{width:100%}
+.h-full{height:100%}
+
+.overflow-hidden{overflow:hidden}
+.overflow-auto{overflow:auto}
+
+/* ── ANIMATION ── */
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@keyframes slideInUp{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.animate-fadeIn{
+  animation:fadeIn 0.3s ease;
+}
+
+.animate-slideInUp{
+  animation:slideInUp 0.3s ease;
 }
 </style>
 </head>
 <body>
-<div class="app" id="app"></div>
-<script>
-// ─── DATA ───
-const PLAN=[
-{day:"Monday",label:"Back / Biceps",icon:"\u{1F4AA}",exercises:[
-{n:"Lat Pulldown",s:4,r:"10-12",m:"Lats",g:"Sit with thighs secured under pads. Grip the bar slightly wider than shoulder width. Pull the bar down to your upper chest, squeezing your shoulder blades together. Control the weight back up slowly.",t:"Don't lean too far back. Focus on pulling with your elbows, not your hands."},
-{n:"Seated Cable Row",s:4,r:"10-12",m:"Mid Back",g:"Sit upright with feet on the platform and knees slightly bent. Pull the handle to your lower chest, keeping elbows close to your body. Squeeze your back at the peak, then slowly extend.",t:"Keep your torso still — avoid rocking back and forth to generate momentum."},
-{n:"Single-Arm Dumbbell Row",s:3,r:"10 each",m:"Lats, Rhomboids",g:"Place one knee and hand on a bench. Hold a dumbbell in the opposite hand with arm extended. Row the weight up toward your hip, squeezing at the top. Lower with control.",t:"Keep your back flat and core braced. Think about driving your elbow to the ceiling."},
-{n:"Face Pulls",s:3,r:"15",m:"Rear Delts, Upper Back",g:"Set a cable at face height with a rope attachment. Pull the rope toward your face, separating the ends as you pull. Squeeze your rear delts and upper back at the end.",t:"Great for posture and shoulder health. Keep it light and controlled."},
-{n:"Barbell Curl",s:3,r:"10-12",m:"Biceps",g:"Stand with feet shoulder-width apart, gripping a barbell underhand. Curl the bar up toward your shoulders keeping elbows pinned at your sides. Lower slowly.",t:"Don't swing. If you need to use momentum, go lighter."},
-{n:"Hammer Curls",s:3,r:"12 each",m:"Biceps, Brachialis",g:"Hold dumbbells at your sides with palms facing inward (neutral grip). Curl up one at a time or together, keeping wrists straight throughout.",t:"These build the thickness of your arms and forearm strength."},
-]},
-{day:"Tuesday",label:"Chest / Triceps / Shoulders",icon:"\u{1F525}",exercises:[
-{n:"Dumbbell Bench Press",s:4,r:"10-12",m:"Chest",g:"Lie on a flat bench holding dumbbells above your chest, palms forward. Lower the weights to chest level with elbows at about 45\u00B0. Press back up, squeezing your chest at the top.",t:"Plant your feet firmly and maintain a slight arch in your lower back."},
-{n:"Incline Dumbbell Press",s:3,r:"10-12",m:"Upper Chest",g:"Set the bench to about 30-45\u00B0. Press dumbbells up from chest level, arms angled slightly inward. Lower with control.",t:"Hits the upper chest which gives a fuller look. Don't go too steep on the incline."},
-{n:"Cable Flyes",s:3,r:"12-15",m:"Chest",g:"Stand in the center of a cable machine with handles set at chest height. With a slight bend in your elbows, bring your hands together in front of you. Slowly open back up.",t:"Focus on the squeeze at the center. Keep it smooth — no jerking."},
-{n:"Overhead Press (Dumbbell)",s:4,r:"10",m:"Shoulders",g:"Sit or stand holding dumbbells at shoulder height. Press them overhead until arms are fully extended. Lower back to shoulder level.",t:"Brace your core to protect your lower back. Don't flare your elbows out too wide."},
-{n:"Lateral Raises",s:3,r:"15",m:"Side Delts",g:"Stand with dumbbells at your sides. Raise them out to the sides until arms are parallel to the ground. Lower slowly.",t:"Go light — side delts respond well to higher reps. Lead with your elbows, not your hands."},
-{n:"Tricep Rope Pushdowns",s:3,r:"12-15",m:"Triceps",g:"Attach a rope to a high cable. Push down by extending your elbows, splitting the rope at the bottom. Slowly let it come back up.",t:"Keep your elbows locked at your sides. Squeeze at the bottom."},
-{n:"Overhead Tricep Extension",s:3,r:"12",m:"Triceps",g:"Hold a dumbbell or rope attachment overhead with both hands. Lower behind your head by bending at the elbows. Extend back up.",t:"Keep your upper arms still — only your forearms should move."},
-]},
-{day:"Wednesday",label:"Legs (Glute Focus) + Core",icon:"\u{1F351}",exercises:[
-{n:"Barbell Hip Thrust",s:4,r:"10-12",m:"Glutes",g:"Sit on the ground with your upper back against a bench and a loaded barbell over your hips. Drive through your heels to lift your hips until your body forms a straight line from shoulders to knees. Squeeze your glutes hard at the top. Lower slowly.",t:"This is your #1 glute builder. Use a pad on the bar. Push through your heels and pause at the top."},
-{n:"Romanian Deadlift (RDL)",s:4,r:"10-12",m:"Hamstrings, Glutes",g:"Hold a barbell or dumbbells at hip level. Hinge at your hips, pushing them backward as the weight travels down your shins. Keep a slight bend in your knees. Return to standing by squeezing your glutes forward.",t:"You should feel a deep stretch in your hamstrings. Keep the bar close to your body. Don't round your back."},
-{n:"Bulgarian Split Squat",s:3,r:"10 each",m:"Quads, Glutes",g:"Stand about 2 feet in front of a bench. Place one foot behind you on the bench. Lower your back knee toward the ground, keeping your front shin mostly vertical. Drive up through your front heel.",t:"Lean slightly forward to hit glutes more. These are tough — bodyweight is fine to start."},
-{n:"Sumo Squat (Dumbbell)",s:3,r:"12-15",m:"Inner Thigh, Glutes",g:"Stand with feet wider than shoulder-width, toes pointed out. Hold a dumbbell at your center. Squat down keeping your knees tracking over your toes. Drive up and squeeze.",t:"Go deep if your mobility allows. Great for inner thighs and glute shaping."},
-{n:"Cable Kickbacks",s:3,r:"15 each",m:"Glutes",g:"Attach an ankle strap to a low cable. Face the machine and kick one leg straight back, squeezing your glute at the top. Return slowly.",t:"Keep your core tight and don't arch your back. Slow and controlled wins here."},
-{n:"Hanging Leg Raises",s:3,r:"12-15",m:"Lower Abs",g:"Hang from a bar with arms fully extended. Raise your legs (straight or bent) until they're parallel to the ground or higher. Lower with control.",t:"Don't swing. If straight legs are too hard, bend your knees."},
-{n:"Cable Woodchops",s:3,r:"12 each",m:"Obliques, Core",g:"Set a cable high. Stand sideways to the machine. Pull the handle diagonally across your body from high to low in a chopping motion. Control the return.",t:"Rotate through your core, not your arms. Keep hips stable."},
-{n:"Dead Bug",s:3,r:"10 each",m:"Deep Core",g:"Lie on your back with arms pointing to the ceiling and knees at 90\u00B0. Slowly extend one arm overhead and the opposite leg out straight, keeping your lower back pressed into the floor. Return and repeat other side.",t:"If your back arches off the floor, you've gone too far. This is amazing for building a stable core."},
-]},
-{day:"Thursday",label:"Back / Biceps + Core",icon:"\u{1F4AA}",exercises:[
-{n:"Assisted Pull-Ups",s:4,r:"8-10",m:"Lats, Upper Back",g:"Use the assisted pull-up machine or a resistance band. Grip the bar overhand, wider than shoulder-width. Pull yourself up until your chin clears the bar. Lower slowly.",t:"Reduce the assistance over time as you get stronger. These build serious back definition."},
-{n:"T-Bar Row",s:4,r:"10-12",m:"Mid Back, Lats",g:"Straddle the T-bar. Bend at the hips, keeping your back flat. Row the weight up to your chest, squeezing your back. Lower with control.",t:"Great compound movement. Keep your core braced throughout."},
-{n:"Straight-Arm Pulldown",s:3,r:"12-15",m:"Lats",g:"Stand facing a cable machine with a straight bar attached at the top. With arms nearly straight, push the bar down in an arc to your thighs. Slowly return.",t:"Really isolates the lats. Keep the motion smooth and deliberate."},
-{n:"Reverse Flyes",s:3,r:"15",m:"Rear Delts",g:"Bend over at the hips or use a reverse fly machine. With a slight bend in your elbows, raise the weights out to the sides. Squeeze your upper back.",t:"Great for posture. Go light and feel the contraction."},
-{n:"Incline Dumbbell Curl",s:3,r:"10-12",m:"Biceps (long head)",g:"Sit on an incline bench (45\u00B0) with dumbbells hanging at your sides. Curl up while keeping your upper arms still. Lower fully for a good stretch.",t:"The incline gives an incredible stretch at the bottom — amazing for bicep growth."},
-{n:"Cable Curl",s:3,r:"12-15",m:"Biceps",g:"Attach a straight or EZ bar to a low cable. Curl up keeping elbows at your sides. Squeeze at the top and lower slowly.",t:"Cables provide constant tension through the whole range of motion."},
-{n:"Plank (Weighted)",s:3,r:"30-45 sec",m:"Core",g:"Get into a forearm plank position. Keep your body in a straight line from head to heels. Brace your core as if someone were about to push you. Hold.",t:"Don't let your hips sag or pike up. Breathe steadily."},
-{n:"Bicycle Crunches",s:3,r:"20 each",m:"Abs, Obliques",g:"Lie on your back with hands behind your head. Bring one knee toward your chest while twisting to touch the opposite elbow to it. Alternate sides in a pedaling motion.",t:"Slow and controlled. Don't pull on your neck — the rotation comes from your core."},
-]},
-{day:"Friday",label:"Chest / Triceps / Shoulders",icon:"\u{1F525}",exercises:[
-{n:"Barbell Bench Press",s:4,r:"8-10",m:"Chest",g:"Lie on a flat bench, gripping the bar slightly wider than shoulder-width. Unrack and lower the bar to your mid-chest. Press up explosively. Lock out at the top.",t:"Squeeze your shoulder blades together for stability. Have a spotter if going heavy."},
-{n:"Dumbbell Chest Fly",s:3,r:"12",m:"Chest",g:"Lie on a flat bench with dumbbells pressed above your chest. Open your arms wide with a slight bend in your elbows, feeling a stretch across your chest. Bring them back together.",t:"Don't go too deep — stop when you feel a good stretch. Think about hugging a big tree."},
-{n:"Machine Shoulder Press",s:4,r:"10-12",m:"Shoulders",g:"Sit with your back supported. Grip the handles at shoulder height. Press up until arms are almost locked. Lower back to start.",t:"Machines are great for shoulder pressing safely and with good form."},
-{n:"Front Raises",s:3,r:"12",m:"Front Delts",g:"Hold dumbbells at your thighs with palms facing back. Raise one or both arms straight in front of you to shoulder height. Lower slowly.",t:"Go light. Alternate arms if needed to maintain control."},
-{n:"Rear Delt Fly Machine",s:3,r:"15",m:"Rear Delts",g:"Sit facing the machine pad. Push the handles outward and back, squeezing your rear delts. Return slowly.",t:"Keeps rear delts balanced with the front and side — important for shoulder health."},
-{n:"Close-Grip Bench Press",s:3,r:"10-12",m:"Triceps, Chest",g:"Lie on a bench gripping the bar at shoulder-width or slightly narrower. Lower the bar to your chest keeping elbows close. Press up.",t:"Emphasizes triceps more than regular bench. Don't go too narrow or it'll hurt your wrists."},
-{n:"Skull Crushers",s:3,r:"12",m:"Triceps",g:"Lie on a bench holding an EZ bar or dumbbells above your chest. Bend only at the elbows to lower the weight toward your forehead. Extend back up.",t:"Keep your upper arms vertical. Go light until you're comfortable with the movement."},
-]},
-{day:"Saturday",label:"Legs (Glute Focus) + Core",icon:"\u{1F351}",exercises:[
-{n:"Barbell Squat",s:4,r:"8-10",m:"Quads, Glutes",g:"Position the barbell on your upper traps. Stand with feet shoulder-width apart, toes slightly out. Squat down until your thighs are at least parallel to the ground. Drive up through your heels.",t:"Keep your chest up and core braced. Depth matters — try to get below parallel for maximum glute activation."},
-{n:"Hip Thrust (Single Leg)",s:3,r:"10 each",m:"Glutes",g:"Set up like a normal hip thrust but extend one leg out straight. Drive through the planted heel to raise your hips. Squeeze at the top.",t:"Incredible for fixing glute imbalances. Use bodyweight or light weight to start."},
-{n:"Walking Lunges",s:3,r:"12 each",m:"Quads, Glutes",g:"Hold dumbbells at your sides. Step forward and lower until both knees are at 90\u00B0. Push off the front foot and step into the next lunge.",t:"Take longer steps to bias glutes, shorter steps for quads. Stay upright."},
-{n:"Leg Press (Feet High & Wide)",s:4,r:"12",m:"Glutes, Hamstrings",g:"Sit in the leg press with feet placed high and wide on the platform. Lower the weight until your knees are at about 90\u00B0. Press back up.",t:"High and wide foot placement targets glutes and hamstrings more than a standard position."},
-{n:"Glute Bridge (Banded)",s:3,r:"20",m:"Glutes",g:"Place a resistance band just above your knees. Lie on your back with feet flat. Drive your hips up, pushing your knees out against the band. Squeeze and hold at the top.",t:"High-rep burnout to finish off glutes. The band forces your glute medius to fire."},
-{n:"Ab Rollout",s:3,r:"10-12",m:"Core",g:"Kneel on the ground with the ab wheel or a loaded barbell in front of you. Roll forward, extending your body as far as you can control. Pull back to the starting position using your core.",t:"Only go as far as you can without your hips sagging. This is one of the best core exercises there is."},
-{n:"Russian Twists",s:3,r:"20 total",m:"Obliques",g:"Sit on the floor with knees bent and feet slightly elevated. Hold a weight or medicine ball at your chest. Rotate side to side, touching the weight near the ground on each side.",t:"Keep your chest lifted. The rotation should come from your torso, not your arms."},
-{n:"Plank to Downward Dog",s:3,r:"10",m:"Core, Shoulders",g:"Start in a high plank. Push your hips up and back into a downward dog position, then return to plank. Move slowly and deliberately.",t:"Great for core stability and a nice stretch. A perfect finisher."},
-]},
-{day:"Sunday",label:"Rest & Recover",icon:"\u{1F634}",exercises:[]},
-];
-
-// SVG icons
-const ICO={
-dumbbell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 7v10M18 7v10M3 8v8M21 8v8M6 12h12"/></svg>',
-calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
-book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>',
-trend:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
-history:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>',
-x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
-info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
-chevR:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>',
-chevD:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>',
-chevU:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>',
-flame:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.07-2.14 0-5.5 3.5-7.5.67 2.5 1.5 4.35 2.15 5.95A7 7 0 115 12.3c.42-.64.98-1.16 1.5-1.55"/></svg>',
-target:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
-play:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21"/></svg>',
-pause:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>',
-reset:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>',
-timer:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M12 1v3"/></svg>',
-};
-
-// ─── STATE ───
-const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const todayName=dayNames[new Date().getDay()];
-const todayIdx=PLAN.findIndex(w=>w.day===todayName);
-
-let state={
-  tab:"today",
-  selectedDay:todayIdx>=0?todayIdx:0,
-  completedSets:{},
-  weights:{},
-  logs:[],
-  workoutHistory:[],
-  restSeconds:90,
-  timerOpen:false,
-  guideExercise:null,
-  openGuideDay:null,
-  trackView:"log",
-  expandedHist:null,
-};
-
-// Timer state
-let timerRemaining=0,timerRunning=false,timerInterval=null;
-
-function startTimer(){
-  timerRemaining=state.restSeconds;
-  timerRunning=true;
-  state.timerOpen=true;
-  clearInterval(timerInterval);
-  timerInterval=setInterval(()=>{
-    if(timerRunning&&timerRemaining>0){timerRemaining--;renderTimer()}
-    if(timerRemaining<=0){timerRunning=false;clearInterval(timerInterval);renderTimer()}
-  },1000);
-  render();
-}
-
-function renderTimer(){
-  const el=document.getElementById("timer-display");
-  if(!el)return;
-  const pct=((state.restSeconds-timerRemaining)/state.restSeconds)*100;
-  const m=Math.floor(timerRemaining/60),s=timerRemaining%60;
-  const circ=2*Math.PI*70;
-  el.innerHTML=`
-    <svg width="160" height="160" viewBox="0 0 160 160">
-      <circle cx="80" cy="80" r="70" fill="none" stroke="#F5F5F4" stroke-width="8"/>
-      <circle cx="80" cy="80" r="70" fill="none" stroke="${timerRemaining<=0?'#6B8F71':'#7C6F64'}" stroke-width="8"
-        stroke-dasharray="${circ}" stroke-dashoffset="${circ*(1-pct/100)}" stroke-linecap="round" transform="rotate(-90 80 80)"
-        class="timer-ring"/>
-    </svg>
-    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column">
-      <span style="font-size:40px;font-weight:300;color:${timerRemaining<=0?'#6B8F71':'#1C1917'};font-variant-numeric:tabular-nums">${m}:${String(s).padStart(2,'0')}</span>
-      ${timerRemaining<=0?'<span style="font-size:13px;color:#6B8F71;font-weight:600;margin-top:4px">GO!</span>':''}
-    </div>`;
-  // Update pause/play button text
-  const pb=document.getElementById("timer-toggle");
-  if(pb)pb.innerHTML=`<span style="width:16px;height:16px;display:inline-flex">${timerRunning?ICO.pause:ICO.play}</span>${timerRunning?'Pause':'Resume'}`;
-}
-
-// ─── SVG CHARTS ───
-function drawLineChart(data,key,color,w,h){
-  if(data.length<2)return'<div style="text-align:center;padding:30px;color:#A8A29E">Need more data</div>';
-  const vals=data.map(d=>d[key]).filter(v=>v!=null);
-  if(vals.length<2)return'<div style="text-align:center;padding:30px;color:#A8A29E">Need more data</div>';
-  const min=Math.min(...vals)-2,max=Math.max(...vals)+2;
-  const pad={t:10,r:10,b:30,l:40};
-  const cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
-  const pts=data.filter(d=>d[key]!=null).map((d,i,arr)=>{
-    const x=pad.l+(i/(arr.length-1))*cw;
-    const y=pad.t+ch-(((d[key]-min)/(max-min))*ch);
-    return{x,y,label:d.date,val:d[key]};
-  });
-  let svg=`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
-  // Grid lines
-  for(let i=0;i<5;i++){
-    const y=pad.t+(ch/4)*i;
-    const v=max-((max-min)/4)*i;
-    svg+=`<line x1="${pad.l}" y1="${y}" x2="${w-pad.r}" y2="${y}" stroke="#F5F5F4" stroke-width="1"/>`;
-    svg+=`<text x="${pad.l-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#A8A29E">${Math.round(v)}</text>`;
-  }
-  // X labels
-  pts.forEach((p,i)=>{if(i%Math.max(1,Math.floor(pts.length/5))===0||i===pts.length-1)
-    svg+=`<text x="${p.x}" y="${h-6}" text-anchor="middle" font-size="10" fill="#A8A29E">${p.label}</text>`;
-  });
-  // Line
-  const pathD=pts.map((p,i)=>(i===0?'M':'L')+p.x+','+p.y).join(' ');
-  svg+=`<path d="${pathD}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
-  // Dots
-  pts.forEach(p=>svg+=`<circle cx="${p.x}" cy="${p.y}" r="4" fill="${color}"/>`);
-  svg+=`</svg>`;
-  return svg;
-}
-
-function drawBarChart(data,key,color,w,h){
-  const vals=data.map(d=>d[key]).filter(v=>v!=null);
-  if(vals.length<1)return'<div style="text-align:center;padding:30px;color:#A8A29E">Need more data</div>';
-  const max=Math.max(...vals)*1.15||150;
-  const pad={t:10,r:10,b:30,l:40};
-  const cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
-  const filtered=data.filter(d=>d[key]!=null);
-  const bw=Math.min(24,cw/filtered.length-4);
-  let svg=`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
-  for(let i=0;i<5;i++){
-    const y=pad.t+(ch/4)*i;
-    const v=max-((max)/4)*i;
-    svg+=`<line x1="${pad.l}" y1="${y}" x2="${w-pad.r}" y2="${y}" stroke="#F5F5F4" stroke-width="1"/>`;
-    svg+=`<text x="${pad.l-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#A8A29E">${Math.round(v)}</text>`;
-  }
-  filtered.forEach((d,i)=>{
-    const x=pad.l+(i+.5)*(cw/filtered.length)-bw/2;
-    const bh=(d[key]/max)*ch;
-    const y=pad.t+ch-bh;
-    svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="${color}"/>`;
-    if(i%Math.max(1,Math.floor(filtered.length/6))===0||i===filtered.length-1)
-      svg+=`<text x="${x+bw/2}" y="${h-6}" text-anchor="middle" font-size="10" fill="#A8A29E">${d.date}</text>`;
-  });
-  svg+=`</svg>`;
-  return svg;
-}
-
-// ─── CHECK COMPLETION ───
-function checkCompletion(){
-  PLAN.forEach((w,di)=>{
-    if(!w.exercises.length)return;
-    const total=w.exercises.reduce((s,ex)=>s+ex.s,0);
-    const done=w.exercises.reduce((s,ex,ei)=>{
-      let c=0;for(let si=0;si<ex.s;si++)if(state.completedSets[di+'-'+ei+'-'+si])c++;return s+c;
-    },0);
-    if(done===total&&total>0){
-      const d=new Date().toISOString().slice(0,10);
-      if(!state.workoutHistory.find(h=>h.date===d&&h.di===di)){
-        state.workoutHistory.unshift({date:d,di,label:w.label,icon:w.icon,
-          setsCompleted:done,totalSets:total,
-          exercises:w.exercises.map((ex,ei)=>({name:ex.n,sets:ex.s,
-            done:Array.from({length:ex.s}).filter((_,si)=>state.completedSets[di+'-'+ei+'-'+si]).length,
-            weight:state.weights[di+'-'+ei]||null}))
-        });
-      }
-    }
-  });
-}
-
-// ─── RENDER ───
-function render(){
-  const app=document.getElementById('app');
-  let html=`
+<div class="app">
   <div class="topbar">
-    <div><h2>FitTrack</h2><div class="sub">Your Gym Companion</div></div>
-    <div class="week-badge"><span style="width:13px;height:13px;display:inline-flex;color:#7C6F64">${ICO.flame}</span>Week ${Math.ceil(new Date().getDate()/7)}</div>
+    <div>
+      <h2>FitTrack</h2>
+      <p class="sub">Week 16</p>
+    </div>
+    <div class="week-badge">
+      <span>Week 16</span>
+    </div>
   </div>
-  <div class="content" id="content">`;
 
-  if(state.tab==='today') html+=renderToday();
-  else if(state.tab==='week') html+=renderWeek();
-  else if(state.tab==='guide') html+=renderGuide();
-  else if(state.tab==='track') html+=renderTrack();
-  else if(state.tab==='history') html+=renderHistory();
-
-  html+=`</div>`;
-  html+=renderTabBar();
-
-  // Modals
-  if(state.guideExercise) html+=renderExerciseModal();
-  if(state.timerOpen) html+=renderTimerModal();
-
-  app.innerHTML=html;
-
-  // After render, start timer display update
-  if(state.timerOpen)renderTimer();
-}
-
-function renderTabBar(){
-  const tabs=[{id:'today',label:'Today',ico:ICO.dumbbell},{id:'week',label:'Schedule',ico:ICO.calendar},{id:'guide',label:'Guide',ico:ICO.book},{id:'track',label:'Track',ico:ICO.trend},{id:'history',label:'History',ico:ICO.history}];
-  return`<nav class="tab-nav">${tabs.map(t=>`<button class="tab-btn${state.tab===t.id?' active':''}" onclick="setTab('${t.id}')"><span style="width:20px;height:20px;display:inline-flex">${t.ico}</span><span>${t.label}</span></button>`).join('')}</nav>`;
-}
-
-function renderToday(){
-  const w=PLAN[state.selectedDay];
-  if(!w.exercises.length)return`<div class="empty"><div style="font-size:64px;margin-bottom:16px">\u{1F634}</div><h2 style="color:#1C1917;font-size:22px">Rest Day</h2><p style="font-size:15px;color:#57534E;line-height:1.6;max-width:280px;margin:12px auto 0">Your muscles grow during rest. Stretch, hydrate, get your protein in, and come back stronger tomorrow.</p></div>`;
-  const total=w.exercises.reduce((s,ex)=>s+ex.s,0);
-  const done=w.exercises.reduce((s,ex,ei)=>{let c=0;for(let si=0;si<ex.s;si++)if(state.completedSets[state.selectedDay+'-'+ei+'-'+si])c++;return s+c},0);
-  const pct=total>0?Math.round(done/total*100):0;
-  let h=`<div style="margin-bottom:20px">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-      <span style="font-size:28px">${w.icon}</span>
-      <div><p style="font-size:13px;color:#A8A29E;font-weight:500">${w.day}</p><h1 style="font-size:22px;font-weight:700">${w.label}</h1></div>
-    </div>
-    <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${pct===100?'#6B8F71':'#7C6F64'}"></div></div>
-    <p style="font-size:12px;color:#A8A29E;margin-top:6px">${done}/${total} sets completed (${pct}%)</p>
-  </div>`;
-  // Rest timer selector
-  h+=`<div class="rest-sel"><span style="width:14px;height:14px;display:inline-flex;color:#A8A29E">${ICO.timer}</span><span>Rest timer:</span>`;
-  [60,90,120].forEach(s=>{h+=`<button class="rest-opt${state.restSeconds===s?' active':''}" onclick="state.restSeconds=${s};render()">${s}s</button>`});
-  h+=`</div>`;
-  // Exercise cards
-  w.exercises.forEach((ex,ei)=>{
-    const allDone=Array.from({length:ex.s}).every((_,si)=>state.completedSets[state.selectedDay+'-'+ei+'-'+si]);
-    h+=`<div class="ex-card${allDone?' done':''}">
-      <div class="ex-header">
-        <div style="flex:1">
-          <div class="ex-name">${ex.n}<button class="ex-info-btn" onclick="showGuide(${state.selectedDay},${ei})"><span style="width:14px;height:14px;display:inline-flex">${ICO.info}</span></button></div>
-          <div class="ex-meta">${ex.m} \u00B7 ${ex.s} \u00D7 ${ex.r}</div>
+  <div class="content">
+    <!-- WEEK STATS GRID -->
+    <div class="grid grid-3 gap-2" style="margin-bottom:20px">
+      <div class="week-stat card">
+        <div class="label">Steps</div>
+        <div class="value">8,342</div>
+        <div class="bar">
+          <div class="bar-fill" style="width:83%"></div>
         </div>
-        <input class="wt-input" type="number" placeholder="lbs" value="${state.weights[state.selectedDay+'-'+ei]||''}" onchange="setWeight(${state.selectedDay},${ei},this.value)">
       </div>
-      <div class="set-row">`;
-    for(let si=0;si<ex.s;si++){
-      const ck=state.completedSets[state.selectedDay+'-'+ei+'-'+si];
-      h+=`<button class="set-btn${ck?' checked':''}" onclick="toggleSet(${state.selectedDay},${ei},${si})">${ck?'<span style="width:16px;height:16px;display:inline-flex">'+ICO.check+'</span>':'Set '+(si+1)}</button>`;
-    }
-    h+=`</div></div>`;
-  });
-  return h;
-}
-
-function renderWeek(){
-  let h=`<h1 style="font-size:22px;font-weight:700;margin:0 0 4px">Weekly Schedule</h1>
-  <p style="font-size:13px;color:#A8A29E;margin:0 0 20px">Muscle Group Split \u2014 6 Days On, 1 Rest</p>`;
-  PLAN.forEach((w,i)=>{
-    const isToday=i===(todayIdx>=0?todayIdx:0);
-    h+=`<button class="sched-btn${isToday?' today':''}" onclick="selectDay(${i})">
-      <span class="sched-icon">${w.icon}</span>
-      <div style="flex:1">
-        <div class="sched-day">${w.day}</div>
-        <div class="sched-label">${w.label}</div>
-        ${w.exercises.length?`<div class="sched-detail">${w.exercises.length} exercises \u00B7 ${w.exercises.reduce((s,e)=>s+e.s,0)} sets</div>`:''}
+      <div class="week-stat card">
+        <div class="label">Calories</div>
+        <div class="value">2,145</div>
+        <div class="bar">
+          <div class="bar-fill" style="width:71%"></div>
+        </div>
       </div>
-      ${isToday?'<span class="today-badge">TODAY</span>':''}
-      <span style="width:18px;height:18px;display:inline-flex;color:#A8A29E">${ICO.chevR}</span>
-    </button>`;
-  });
-  return h;
-}
-
-function renderGuide(){
-  let h=`<h1 style="font-size:22px;font-weight:700;margin:0 0 4px">Exercise Guide</h1>
-  <p style="font-size:13px;color:#A8A29E;margin:0 0 20px">Tap any exercise for form tips and instructions</p>`;
-  PLAN.filter(w=>w.exercises.length).forEach((w,wi)=>{
-    const open=state.openGuideDay===wi;
-    h+=`<div class="guide-day">
-      <button class="guide-day-btn${open?' open':''}" onclick="toggleGuideDay(${wi})">
-        <span style="font-size:20px;margin-right:12px">${w.icon}</span>
-        <div style="flex:1"><p style="font-size:14px;font-weight:600;margin:0">${w.label}</p><p style="font-size:12px;color:#A8A29E;margin:2px 0 0">${w.day} \u00B7 ${w.exercises.length} exercises</p></div>
-        <span style="width:18px;height:18px;display:inline-flex;color:#A8A29E">${open?ICO.chevU:ICO.chevD}</span>
-      </button>`;
-    if(open){
-      h+=`<div class="guide-list">`;
-      w.exercises.forEach((ex,ei)=>{
-        const dayIdx=PLAN.indexOf(w);
-        h+=`<button class="guide-item" onclick="showGuide(${dayIdx},${ei})">
-          <div style="flex:1"><p style="font-size:14px;font-weight:500;margin:0">${ex.n}</p><p style="font-size:12px;color:#A8A29E;margin:2px 0 0">${ex.m}</p></div>
-          <span style="width:16px;height:16px;display:inline-flex;color:#A8A29E">${ICO.chevR}</span>
-        </button>`;
-      });
-      h+=`</div>`;
-    }
-    h+=`</div>`;
-  });
-  return h;
-}
-
-function renderTrack(){
-  const today=new Date().toISOString().slice(0,10);
-  const todayLog=state.logs.find(l=>l.date===today);
-  let h=`<h1 style="font-size:22px;font-weight:700;margin:0 0 20px">Track Progress</h1>
-  <div class="toggle-bar">
-    <button class="toggle-btn${state.trackView==='log'?' active':''}" onclick="state.trackView='log';render()">Log Entry</button>
-    <button class="toggle-btn${state.trackView==='charts'?' active':''}" onclick="state.trackView='charts';render()">Progress Charts</button>
-  </div>`;
-  if(state.trackView==='log'){
-    h+=`<div class="log-card">
-      <p style="font-size:14px;font-weight:600;margin:0 0 14px">Today's Log</p>
-      <div class="log-row">
-        <div class="log-field"><label>Weight (lbs)</label><input id="wt-log" type="number" placeholder="${todayLog&&todayLog.weight||'128'}"></div>
-        <div class="log-field"><label>Protein (g)</label><input id="pr-log" type="number" placeholder="${todayLog&&todayLog.protein||'100'}"></div>
-      </div>
-      <button class="save-btn" onclick="saveLog()">Save Today's Entry</button>
-    </div>`;
-    if(state.logs.length){
-      h+=`<p style="font-size:13px;font-weight:600;color:#57534E;margin-bottom:8px">Recent Entries</p>`;
-      state.logs.slice(-7).reverse().forEach(l=>{
-        h+=`<div class="entry-row"><span style="font-size:13px;color:#57534E">${l.date}</span><div style="display:flex;gap:16px">`;
-        if(l.weight)h+=`<span style="font-size:13px;font-weight:500">${l.weight} lbs</span>`;
-        if(l.protein)h+=`<span style="font-size:13px;font-weight:500;color:#6B8F71">${l.protein}g protein</span>`;
-        h+=`</div></div>`;
-      });
-    }
-    h+=`<div class="protein-box">
-      <div class="title"><span style="width:16px;height:16px;display:inline-flex;color:#6B8F71">${ICO.target}</span><span>Your Protein Target</span></div>
-      <p>At 128 lbs and actively building muscle on tirzepatide, aim for 100\u2013130g of protein daily. This helps preserve and build lean mass while you're losing fat.</p>
-    </div>`;
-  } else {
-    const chartData=state.logs.slice(-14).map(l=>({date:l.date.slice(5),weight:l.weight,protein:l.protein}));
-    if(chartData.length>1){
-      h+=`<div class="chart-card"><h3>Body Weight (lbs)</h3>${drawLineChart(chartData,'weight','#7C6F64',440,200)}</div>`;
-      h+=`<div class="chart-card"><h3>Daily Protein (g)</h3>${drawBarChart(chartData,'protein','#6B8F71',440,200)}</div>`;
-    } else {
-      h+=`<div class="empty" style="padding:40px 20px"><span style="width:40px;height:40px;display:inline-flex;color:#A8A29E">${ICO.trend}</span><h2>Not enough data yet</h2><p>Log at least 2 days to see your trends</p></div>`;
-    }
-  }
-  return h;
-}
-
-function renderHistory(){
-  if(!state.workoutHistory.length)return`<div class="empty"><span style="width:40px;height:40px;display:inline-flex;color:#A8A29E">${ICO.history}</span><h2>No workouts yet</h2><p>Completed workouts will show up here</p></div>`;
-  let h=`<h1 style="font-size:22px;font-weight:700;margin:0 0 4px">Workout History</h1>
-  <p style="font-size:13px;color:#A8A29E;margin:0 0 20px">${state.workoutHistory.length} workout${state.workoutHistory.length!==1?'s':''} logged</p>`;
-  state.workoutHistory.forEach((wh,i)=>{
-    const full=wh.setsCompleted===wh.totalSets;
-    h+=`<div class="hist-item">
-      <button class="hist-btn" onclick="state.expandedHist=state.expandedHist===${i}?null:${i};render()">
-        <span style="font-size:20px;margin-right:12px">${wh.icon}</span>
-        <div style="flex:1"><p style="font-size:14px;font-weight:600;margin:0">${wh.label}</p><p style="font-size:12px;color:#A8A29E;margin:2px 0 0">${wh.date} \u00B7 ${wh.setsCompleted}/${wh.totalSets} sets</p></div>
-        <div class="hist-badge" style="background:${full?'#EDF5EE':'#FDF2F0'};color:${full?'#6B8F71':'#C2837B'}">${full?'Complete':Math.round(wh.setsCompleted/wh.totalSets*100)+'%'}</div>
-      </button>`;
-    if(state.expandedHist===i&&wh.exercises){
-      h+=`<div class="hist-detail">`;
-      wh.exercises.forEach(ex=>{h+=`<div class="hist-ex"><span>${ex.name}</span><span style="color:#A8A29E">${ex.weight?ex.weight+' lbs':'\u2014'} \u00B7 ${ex.done}/${ex.sets} sets</span></div>`});
-      h+=`</div>`;
-    }
-    h+=`</div>`;
-  });
-  return h;
-}
-
-function renderExerciseModal(){
-  const ex=state.guideExercise;
-  return`<div class="modal-overlay" onclick="if(event.target===this){state.guideExercise=null;render()}">
-    <div class="modal-sheet">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
-        <div><h3 style="font-size:20px;font-weight:600">${ex.n}</h3><span style="font-size:13px;color:#A8A29E;margin-top:4px;display:block">${ex.m}</span></div>
-        <button class="modal-close" onclick="state.guideExercise=null;render()"><span style="width:18px;height:18px;display:inline-flex">${ICO.x}</span></button>
-      </div>
-      <div class="guide-section" style="background:#F5F0EB"><h4 style="color:#7C6F64">How to perform</h4><p>${ex.g}</p></div>
-      <div class="guide-section" style="background:#EDF5EE"><h4 style="color:#6B8F71">Tips</h4><p>${ex.t}</p></div>
-    </div>
-  </div>`;
-}
-
-function renderTimerModal(){
-  return`<div class="modal-overlay center" onclick="if(event.target===this){closeTimer()}">
-    <div class="modal-center">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
-        <span style="font-size:14px;font-weight:600;color:#57534E;letter-spacing:1px;text-transform:uppercase">Rest Timer</span>
-        <button onclick="closeTimer()" style="background:none;border:none;cursor:pointer;color:#A8A29E"><span style="width:20px;height:20px;display:inline-flex">${ICO.x}</span></button>
-      </div>
-      <div id="timer-display" style="position:relative;width:160px;height:160px;margin:0 auto 24px"></div>
-      <div class="rest-actions">
-        <button id="timer-toggle" onclick="toggleTimer()"><span style="width:16px;height:16px;display:inline-flex">${timerRunning?ICO.pause:ICO.play}</span>${timerRunning?'Pause':'Resume'}</button>
-        <button onclick="resetTimer()"><span style="width:16px;height:16px;display:inline-flex">${ICO.reset}</span>Reset</button>
+      <div class="week-stat card">
+        <div class="label">Active Min</div>
+        <div class="value">87</div>
+        <div class="bar">
+          <div class="bar-fill" style="width:87%"></div>
+        </div>
       </div>
     </div>
-  </div>`;
-}
 
-// ─── ACTIONS ───
-function setTab(t){state.tab=t;render()}
-function selectDay(i){state.selectedDay=i;state.tab='today';render()}
+    <!-- WORKOUT HISTORY CARD -->
+    <div class="card" style="margin-bottom:16px">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">Recent Workouts</h3>
+      <ul class="list">
+        <li class="list-item">
+          <div class="list-item-icon" style="background:rgba(76,175,80,0.1);color:rgb(76,175,80)">🏃</div>
+          <div class="list-item-content">
+            <div class="list-item-label">Morning Run</div>
+            <div class="list-item-meta">5.2 km • 42 min</div>
+          </div>
+          <div style="color:var(--muted);font-size:12px">Today</div>
+        </li>
+        <li class="list-item">
+          <div class="list-item-icon" style="background:rgba(91,170,216,0.1);color:var(--primary)">🏋️</div>
+          <div class="list-item-content">
+            <div class="list-item-label">Strength Training</div>
+            <div class="list-item-meta">1.5 hr • 450 cal</div>
+          </div>
+          <div style="color:var(--muted);font-size:12px">Yesterday</div>
+        </li>
+        <li class="list-item">
+          <div class="list-item-icon" style="background:rgba(255,152,0,0.1);color:rgb(255,152,0)">🚴</div>
+          <div class="list-item-content">
+            <div class="list-item-label">Cycling</div>
+            <div class="list-item-meta">12 km • 45 min</div>
+          </div>
+          <div style="color:var(--muted);font-size:12px">2 days ago</div>
+        </li>
+      </ul>
+    </div>
 
-function toggleSet(di,ei,si){
-  const key=di+'-'+ei+'-'+si;
-  if(state.completedSets[key]){delete state.completedSets[key]}
-  else{state.completedSets[key]=true;startTimer()}
-  checkCompletion();
-  render();
-}
+    <!-- GOALS SECTION -->
+    <div class="card" style="margin-bottom:16px">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">Weekly Goals</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:14px;font-weight:500">Step Goal</span>
+            <span style="font-size:12px;color:var(--muted)">65/70k</span>
+          </div>
+          <div style="height:8px;background:var(--input-bg);border-radius:4px;overflow:hidden">
+            <div style="height:100%;background:var(--primary);width:93%"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:14px;font-weight:500">Active Minutes</span>
+            <span style="font-size:12px;color:var(--muted)">245/300</span>
+          </div>
+          <div style="height:8px;background:var(--input-bg);border-radius:4px;overflow:hidden">
+            <div style="height:100%;background:rgb(76,175,80);width:82%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-function setWeight(di,ei,val){state.weights[di+'-'+ei]=val}
+    <!-- STATISTICS CARD -->
+    <div class="card">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">This Week</h3>
+      <div class="grid grid-2 gap-3">
+        <div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Total Steps</div>
+          <div style="font-size:20px;font-weight:700;color:var(--text)">58,342</div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Avg Daily</div>
+          <div style="font-size:20px;font-weight:700;color:var(--text)">8,334</div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Total Calories</div>
+          <div style="font-size:20px;font-weight:700;color:var(--text)">15,042</div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Avg Daily</div>
+          <div style="font-size:20px;font-weight:700;color:var(--text)">2,149</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-function showGuide(di,ei){
-  const ex=PLAN[di].exercises[ei];
-  state.guideExercise=ex;
-  render();
-}
+<!-- BOTTOM NAV MOCK -->
+<div style="position:fixed;bottom:0;left:0;right:0;max-width:430px;margin:0 auto;height:70px;background:var(--card);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;z-index:5">
+  <button class="btn-icon active" style="border:none">📊</button>
+  <button class="btn-icon" style="border:none">🎯</button>
+  <button class="btn-icon" style="border:none">⚙️</button>
+  <button class="btn-icon" style="border:none">👤</button>
+</div>
 
-function toggleGuideDay(i){state.openGuideDay=state.openGuideDay===i?null:i;render()}
-
-function saveLog(){
-  const wEl=document.getElementById('wt-log');
-  const pEl=document.getElementById('pr-log');
-  if(!wEl||!pEl)return;
-  const w=parseFloat(wEl.value),p=parseFloat(pEl.value);
-  if(isNaN(w)&&isNaN(p))return;
-  const today=new Date().toISOString().slice(0,10);
-  const todayLog=state.logs.find(l=>l.date===today);
-  state.logs=state.logs.filter(l=>l.date!==today);
-  state.logs.push({date:today,weight:isNaN(w)?(todayLog&&todayLog.weight||null):w,protein:isNaN(p)?(todayLog&&todayLog.protein||null):p});
-  state.logs.sort((a,b)=>a.date.localeCompare(b.date));
-  render();
-}
-
-function closeTimer(){state.timerOpen=false;timerRunning=false;clearInterval(timerInterval);render()}
-function toggleTimer(){timerRunning=!timerRunning;if(timerRunning&&timerRemaining>0){timerInterval=setInterval(()=>{if(timerRunning&&timerRemaining>0){timerRemaining--;renderTimer()}if(timerRemaining<=0){timerRunning=false;clearInterval(timerInterval);renderTimer()}},1000)}else{clearInterval(timerInterval)}renderTimer()}
-function resetTimer(){timerRemaining=state.restSeconds;timerRunning=true;clearInterval(timerInterval);timerInterval=setInterval(()=>{if(timerRunning&&timerRemaining>0){timerRemaining--;renderTimer()}if(timerRemaining<=0){timerRunning=false;clearInterval(timerInterval);renderTimer()}},1000);renderTimer()}
-
-// ─── INIT ───
+<script>
+/* ─── INIT ───*/
 render();
+
 </script>
 </body>
 </html>
