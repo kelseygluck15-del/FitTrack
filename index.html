@@ -6,102 +6,119 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>FitTrack</title>
 <style>
+<style>
+
+/* RESET */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FAFAF9;color:#1C1917;overflow-x:hidden}
-input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
-input[type=number]{-moz-appearance:textfield}
-button{font-family:inherit;cursor:pointer}
-::-webkit-scrollbar{width:0}
-.app{max-width:480px;margin:0 auto;min-height:100vh;background:#FAFAF9}
-.topbar{padding:16px 16px 12px;background:#fff;border-bottom:1px solid #E7E5E4;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40}
-.topbar h2{font-size:18px;font-weight:700;letter-spacing:-0.3px}
-.topbar .sub{font-size:11px;color:#A8A29E;font-weight:500;margin-top:1px}
-.week-badge{display:flex;align-items:center;gap:4px;padding:4px 10px;background:#F5F0EB;border-radius:8px;font-size:12px;font-weight:600;color:#7C6F64}
-.content{padding:16px 16px 100px}
-.tab-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #E7E5E4;display:flex;z-index:50;padding-bottom:max(env(safe-area-inset-bottom),8px)}
-.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 6px;gap:2px;background:none;border:none;color:#A8A29E;transition:color .2s}
-.tab-btn.active{color:#7C6F64}
-.tab-btn svg{width:20px;height:20px}
-.tab-btn span{font-size:10px;letter-spacing:.3px}
-.tab-btn.active span{font-weight:600}
-/* Cards */
-.ex-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:10px;border:1px solid #E7E5E4;transition:all .3s}
-.ex-card.done{opacity:.7;border-color:#C8DFC9}
-.ex-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-.ex-name{font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px}
-.ex-meta{font-size:12px;color:#A8A29E;margin-top:2px}
-.ex-info-btn{background:none;border:none;color:#A8A29E;padding:2px}
-.wt-input{width:56px;padding:6px 8px;border-radius:8px;border:1px solid #E7E5E4;font-size:13px;text-align:center;background:#FAFAF9;color:#1C1917;outline:none}
-.set-row{display:flex;gap:6px}
-.set-btn{flex:1;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid #E7E5E4;background:#FAFAF9;color:#57534E;font-size:12px;font-weight:500;transition:all .2s}
-.set-btn.checked{background:#6B8F71;color:#fff;border:none}
-/* Progress bar */
-.prog-bar{margin-top:14px;background:#F5F5F4;border-radius:6px;height:8px;overflow:hidden}
-.prog-fill{height:100%;border-radius:6px;transition:width .4s ease}
-/* Schedule */
-.sched-btn{display:flex;align-items:center;width:100%;padding:14px 16px;background:#fff;border-radius:12px;margin-bottom:8px;border:1px solid #E7E5E4;text-align:left;transition:background .2s}
-.sched-btn.today{background:#F5F0EB;border:1.5px solid #D6CFC7}
-.sched-icon{font-size:24px;margin-right:14px}
-.sched-day{font-size:13px;color:#A8A29E;font-weight:500}
-.sched-label{font-size:15px;font-weight:600;margin-top:2px}
-.sched-detail{font-size:12px;color:#A8A29E;margin-top:4px}
-.today-badge{font-size:11px;font-weight:600;color:#7C6F64;background:#fff;padding:3px 8px;border-radius:6px;margin-right:8px}
-/* Guide */
-.guide-day{margin-bottom:8px}
-.guide-day-btn{display:flex;align-items:center;width:100%;padding:12px 16px;background:#fff;border-radius:12px;border:1px solid #E7E5E4;text-align:left}
-.guide-day-btn.open{border-radius:12px 12px 0 0;border-bottom:none}
-.guide-list{background:#fff;border:1px solid #E7E5E4;border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
-.guide-item{display:flex;align-items:center;width:100%;padding:12px 16px;background:none;border:none;border-top:1px solid #F5F5F4;text-align:left;cursor:pointer}
-.guide-item:first-child{border-top:none}
-/* Modal overlay */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:flex;align-items:flex-end;justify-content:center}
-.modal-overlay.center{align-items:center}
-.modal-sheet{background:#fff;border-radius:20px 20px 0 0;padding:24px 20px 40px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
-.modal-center{background:#fff;border-radius:20px;padding:32px 28px;width:calc(100% - 48px);max-width:320px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.15)}
-.modal-close{background:#FAFAF9;border:none;border-radius:10px;padding:8px;color:#57534E;cursor:pointer}
-.guide-section{border-radius:12px;padding:16px;margin-bottom:16px}
-.guide-section h4{font-size:13px;font-weight:600;margin:0 0 8px;text-transform:uppercase;letter-spacing:.5px}
-.guide-section p{font-size:14px;line-height:1.7;margin:0}
-/* Track */
-.toggle-bar{display:flex;background:#FAFAF9;border-radius:10px;padding:3px;margin-bottom:20px;border:1px solid #E7E5E4}
-.toggle-btn{flex:1;padding:8px 0;border-radius:8px;font-size:13px;font-weight:500;border:none;background:transparent;color:#A8A29E;cursor:pointer}
-.toggle-btn.active{background:#fff;color:#1C1917;border:1px solid #E7E5E4;box-shadow:0 1px 3px rgba(0,0,0,.05)}
-.log-card{background:#fff;border-radius:14px;padding:20px;border:1px solid #E7E5E4;margin-bottom:16px}
-.log-row{display:flex;gap:10px;margin-bottom:14px}
-.log-field{flex:1}
-.log-field label{font-size:12px;color:#A8A29E;margin-bottom:4px;display:block}
-.log-field input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #E7E5E4;font-size:15px;background:#FAFAF9;color:#1C1917;outline:none}
-.save-btn{width:100%;padding:12px;border-radius:10px;background:#7C6F64;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer}
-.entry-row{display:flex;justify-content:space-between;padding:10px 14px;background:#fff;border-radius:10px;margin-bottom:6px;border:1px solid #E7E5E4}
-.protein-box{background:#EDF5EE;border-radius:12px;padding:16px;margin-top:16px}
-.protein-box .title{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.protein-box .title span{font-size:13px;font-weight:600;color:#6B8F71}
-.protein-box p{font-size:13px;line-height:1.6;margin:0}
-/* Chart area */
-.chart-card{background:#fff;border-radius:14px;padding:16px;border:1px solid #E7E5E4;margin-bottom:16px}
-.chart-card h3{font-size:14px;font-weight:600;margin:0 0 12px}
-/* History */
-.hist-item{background:#fff;border-radius:12px;border:1px solid #E7E5E4;margin-bottom:8px;overflow:hidden}
-.hist-btn{display:flex;align-items:center;width:100%;padding:14px 16px;background:none;border:none;text-align:left;cursor:pointer}
-.hist-badge{padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600}
-.hist-detail{padding:0 16px 14px;border-top:1px solid #F5F5F4}
-.hist-ex{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F5F5F4;font-size:13px}
-.hist-ex:last-child{border-bottom:none}
-/* Rest timer */
-.timer-ring{transition:stroke-dashoffset 1s linear,stroke .3s}
-/* Empty state */
-.empty{padding:60px 24px;text-align:center}
-.empty h2{font-size:18px;font-weight:600;color:#57534E;margin:12px 0 6px}
-.empty p{font-size:14px;color:#A8A29E}
-/* Rest timer select */
-.rest-sel{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-.rest-sel span{font-size:12px;color:#A8A29E}
-.rest-opt{padding:4px 10px;border-radius:6px;font-size:12px;font-weight:500;border:1px solid #E7E5E4;background:#FAFAF9;color:#57534E;cursor:pointer}
-.rest-opt.active{background:#7C6F64;color:#fff;border-color:#7C6F64}
-.rest-actions{display:flex;gap:12px;justify-content:center;margin-top:24px}
-.rest-actions button{display:flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;border:1px solid #E7E5E4;background:#FAFAF9;font-size:13px;font-weight:500;color:#1C1917;cursor:pointer}
-/* SVG charts */
-svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  background:linear-gradient(to bottom,#f8fbfe,#eef7fd);
+  color:#1f2d3a;
+  overflow-x:hidden;
+}
+
+/* APP WRAPPER */
+.app{
+  max-width:430px;
+  margin:0 auto;
+  min-height:100vh;
+  padding:16px;
+}
+
+/* TOP BAR */
+.topbar{
+  padding:16px;
+  margin-bottom:12px;
+  background:rgba(255,255,255,0.9);
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(79,158,216,0.12);
+}
+
+.topbar h2{
+  font-size:20px;
+  font-weight:700;
+}
+
+.topbar .sub{
+  font-size:12px;
+  color:#5f7285;
+}
+
+/* CARDS (MAIN UPGRADE) */
+.ex-card,
+.log-card,
+.chart-card,
+.hist-item{
+  background:rgba(255,255,255,0.95);
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:12px;
+  border:1px solid #d9e8f3;
+  box-shadow:0 10px 30px rgba(79,158,216,0.12);
+}
+
+/* BUTTONS */
+button{
+  background:linear-gradient(180deg,#a9dcff 0%,#72bff4 100%);
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:10px 12px;
+  font-weight:600;
+}
+
+/* SET BUTTONS */
+.set-btn{
+  background:#f0f7fc;
+  color:#5f7285;
+  border:1px solid #d9e8f3;
+}
+
+.set-btn.checked{
+  background:#72bff4;
+  color:#fff;
+}
+
+/* INPUTS */
+input{
+  border-radius:12px;
+  border:1px solid #d9e8f3;
+  padding:8px;
+  background:#fff;
+}
+
+/* PROGRESS BAR */
+.prog-bar{
+  background:#eaf4fb;
+}
+
+.prog-fill{
+  background:#72bff4 !important;
+}
+
+/* TAB BAR */
+.tab-nav{
+  background:rgba(255,255,255,0.95);
+  border-top:1px solid #d9e8f3;
+}
+
+.tab-btn{
+  color:#8aa6bc;
+}
+
+.tab-btn.active{
+  color:#2d7fbc;
+}
+
+/* TEXT */
+.ex-meta,
+.sched-day,
+.sched-detail{
+  color:#5f7285;
+}
+
+</style>
 </style>
 </head>
 <body>
